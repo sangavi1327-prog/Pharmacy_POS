@@ -1,0 +1,10 @@
+C:\Users\HP\Desktop\ase\bin\Debug\Database\DbSchema.sql
+C:\Users\HP\Desktop\ase\bin\Debug\SmartMedPharmacy.exe.config
+C:\Users\HP\Desktop\ase\bin\Debug\SmartMedPharmacy.exe
+C:\Users\HP\Desktop\ase\bin\Debug\SmartMedPharmacy.pdb
+C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.csproj.AssemblyReference.cache
+C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.csproj.CoreCompileInputs.cache
+C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.exe
+C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.pdb
+C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.Forms.LoginForm.resources
+C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.csproj.GenerateResource.cache
