@@ -10,8 +10,12 @@ namespace SmartMedPharmacy.Database
     {
         public static void InitializeDatabase()
         {
-            string masterConnString = ConfigurationManager.ConnectionStrings["MasterDb"]?.ConnectionString;
-            string smartMedConnString = ConfigurationManager.ConnectionStrings["SmartMedDb"]?.ConnectionString;
+            string masterConnString = ConfigurationManager.ConnectionStrings["MasterDb"] == null
+                ? null
+                : ConfigurationManager.ConnectionStrings["MasterDb"].ConnectionString;
+            string smartMedConnString = ConfigurationManager.ConnectionStrings["SmartMedDb"] == null
+                ? null
+                : ConfigurationManager.ConnectionStrings["SmartMedDb"].ConnectionString;
 
             if (string.IsNullOrEmpty(masterConnString) || string.IsNullOrEmpty(smartMedConnString))
             {
@@ -59,12 +63,9 @@ namespace SmartMedPharmacy.Database
                         sqlSchema = GetFallbackSchema();
                     }
 
-                    // Execute schemas by command
-                    string[] commands = sqlSchema.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var commandText in commands)
+                    if (!string.IsNullOrWhiteSpace(sqlSchema))
                     {
-                        if (string.IsNullOrWhiteSpace(commandText)) continue;
-                        using (SqlCommand cmd = new SqlCommand(commandText, dbConn))
+                        using (SqlCommand cmd = new SqlCommand(sqlSchema, dbConn))
                         {
                             cmd.ExecuteNonQuery();
                         }
@@ -88,7 +89,7 @@ namespace SmartMedPharmacy.Database
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Critical Database Initialization Failed:\n\n{ex.Message}\n\nPlease check if SQL Server LocalDB is running.", "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Critical Database Initialization Failed:\n\n{0}\n\nPlease check if SQL Server LocalDB is running.", ex.Message), "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw;
             }
         }

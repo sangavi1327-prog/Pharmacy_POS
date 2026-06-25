@@ -8,7 +8,9 @@ namespace SmartMedPharmacy.DataAccess
 {
     public static class DatabaseHelper
     {
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["SmartMedDb"]?.ConnectionString;
+        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["SmartMedDb"] == null
+            ? null
+            : ConfigurationManager.ConnectionStrings["SmartMedDb"].ConnectionString;
 
         public static SqlConnection GetConnection()
         {
@@ -23,7 +25,7 @@ namespace SmartMedPharmacy.DataAccess
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Database Connection Error: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Database Connection Error: {0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw;
             }
         }
@@ -50,7 +52,7 @@ namespace SmartMedPharmacy.DataAccess
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to execute query:\n{query}\n\nError: {ex.Message}", "Database Execution Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to execute query:\n{0}\n\nError: {1}", query, ex.Message), "Database Execution Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return dataTable;
         }
@@ -75,7 +77,7 @@ namespace SmartMedPharmacy.DataAccess
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to execute command:\n{query}\n\nError: {ex.Message}", "Database Execution Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to execute command:\n{0}\n\nError: {1}", query, ex.Message), "Database Execution Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return rowsAffected;
         }
@@ -100,7 +102,7 @@ namespace SmartMedPharmacy.DataAccess
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to execute scalar command:\n{query}\n\nError: {ex.Message}", "Database Execution Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to execute scalar command:\n{0}\n\nError: {1}", query, ex.Message), "Database Execution Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return result;
         }

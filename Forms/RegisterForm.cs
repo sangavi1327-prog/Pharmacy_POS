@@ -73,7 +73,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred during registration:\n\n{ex.Message}", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("An error occurred during registration:\n\n{0}", ex.Message), "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -55,7 +55,7 @@ namespace SmartMedPharmacy.Utilities
 
                         sbContent.Append("BT\n");
                         sbContent.Append("/F1 10 Tf\n");
-                        sbContent.Append($"{startX} {startY} Td\n");
+                        sbContent.Append(string.Format("{0} {1} Td\n", startX, startY));
                         
                         StringBuilder headerRow = new StringBuilder();
                         for (int c = 0; c < dt.Columns.Count; c++)
@@ -68,7 +68,7 @@ namespace SmartMedPharmacy.Utilities
                         
                         // Draw line
                         startY -= 10;
-                        sbContent.Append($"1 w\n{startX} {startY} m\n{startX + totalWidth} {startY} l\nS\n");
+                        sbContent.Append(string.Format("1 w\n{0} {1} m\n{2} {1} l\nS\n", startX, startY, startX + totalWidth));
                         
                         // Rows
                         int currentY = startY - 20;
@@ -78,13 +78,14 @@ namespace SmartMedPharmacy.Utilities
                             
                             sbContent.Append("BT\n");
                             sbContent.Append("/F1 9 Tf\n");
-                            sbContent.Append($"{startX} {currentY} Td\n");
+                            sbContent.Append(string.Format("{0} {1} Td\n", startX, currentY));
                             
                             StringBuilder rowText = new StringBuilder();
                             for (int c = 0; c < dt.Columns.Count; c++)
                             {
-                                string cellVal = dt.Rows[r][c]?.ToString() ?? "";
-                                if (dt.Columns[c].DataType == typeof(DateTime) && DateTime.TryParse(cellVal, out DateTime parsedDate))
+                                string cellVal = dt.Rows[r][c] == null ? "" : dt.Rows[r][c].ToString();
+                                DateTime parsedDate;
+                                if (dt.Columns[c].DataType == typeof(DateTime) && DateTime.TryParse(cellVal, out parsedDate))
                                 {
                                     cellVal = parsedDate.ToString("yyyy-MM-dd");
                                 }
@@ -100,7 +101,7 @@ namespace SmartMedPharmacy.Utilities
                         
                         // Object 4: Content Stream
                         offsets.Add(fs.Position);
-                        writer.Write($"4 0 obj\n<< /Length {streamBytes.Length} >>\nstream\n");
+                        writer.Write(string.Format("4 0 obj\n<< /Length {0} >>\nstream\n", streamBytes.Length));
                         writer.Flush();
                         fs.Write(streamBytes, 0, streamBytes.Length);
                         writer.Write("\nendstream\nendobj\n");
@@ -120,14 +121,14 @@ namespace SmartMedPharmacy.Utilities
                         }
                         
                         // Trailer
-                        writer.Write($"trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n{xrefOffset}\n%%EOF\n");
+                        writer.Write(string.Format("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n{0}\n%%EOF\n", xrefOffset));
                         writer.Flush();
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Error exporting report to PDF: {ex.Message}", ex);
+                throw new InvalidOperationException(string.Format("Error exporting report to PDF: {0}", ex.Message), ex);
             }
         }
         

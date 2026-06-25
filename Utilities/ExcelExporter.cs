@@ -25,8 +25,8 @@ namespace SmartMedPharmacy.Utilities
                 html.AppendLine("</head>");
                 html.AppendLine("<body>");
                 
-                html.AppendLine($"<div class='title'>{sheetName}</div>");
-                html.AppendLine($"<div style='margin-bottom:15px; font-size:10pt; color:#666;'>Generated on: {DateTime.Now.ToString("g")}</div>");
+                html.AppendLine(string.Format("<div class='title'>{0}</div>", sheetName));
+                html.AppendLine(string.Format("<div style='margin-bottom:15px; font-size:10pt; color:#666;'>Generated on: {0}</div>", DateTime.Now.ToString("g")));
                 
                 html.AppendLine("<table>");
                 
@@ -34,7 +34,7 @@ namespace SmartMedPharmacy.Utilities
                 html.AppendLine("<tr>");
                 for (int c = 0; c < dt.Columns.Count; c++)
                 {
-                    html.AppendLine($"<th>{dt.Columns[c].ColumnName}</th>");
+                    html.AppendLine(string.Format("<th>{0}</th>", dt.Columns[c].ColumnName));
                 }
                 html.AppendLine("</tr>");
                 
@@ -44,14 +44,15 @@ namespace SmartMedPharmacy.Utilities
                     html.AppendLine("<tr>");
                     for (int c = 0; c < dt.Columns.Count; c++)
                     {
-                        string cellValue = dt.Rows[r][c]?.ToString() ?? "";
-                        if (decimal.TryParse(cellValue, out decimal numVal) && dt.Columns[c].DataType != typeof(string))
+                        string cellValue = dt.Rows[r][c] == null ? "" : dt.Rows[r][c].ToString();
+                        decimal numVal;
+                        if (decimal.TryParse(cellValue, out numVal) && dt.Columns[c].DataType != typeof(string))
                         {
-                            html.AppendLine($"<td style='mso-number-format:\"\\#\\,\\#\\#0\\.00\";'>{numVal}</td>");
+                            html.AppendLine(string.Format("<td style='mso-number-format:\"\\#\\,\\#\\#0\\.00\";'>{0}</td>", numVal));
                         }
                         else
                         {
-                            html.AppendLine($"<td>{cellValue}</td>");
+                            html.AppendLine(string.Format("<td>{0}</td>", cellValue));
                         }
                     }
                     html.AppendLine("</tr>");
@@ -65,7 +66,7 @@ namespace SmartMedPharmacy.Utilities
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Error exporting to Excel: {ex.Message}", ex);
+                throw new InvalidOperationException(string.Format("Error exporting to Excel: {0}", ex.Message), ex);
             }
         }
     }

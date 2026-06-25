@@ -55,7 +55,8 @@ namespace SmartMedPharmacy.Utilities
         public static bool IsNumeric(string input)
         {
             if (IsEmpty(input)) return false;
-            return decimal.TryParse(input, out _);
+            decimal value;
+            return decimal.TryParse(input, out value);
         }
     }
 }

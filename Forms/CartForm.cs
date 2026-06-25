@@ -62,9 +62,9 @@ namespace SmartMedPharmacy.Forms
 
             dgvCart.DataSource = dt;
 
-            lblSubTotalVal.Text = $"${subTotal:N2}";
-            lblDiscountVal.Text = $"${totalDiscount:N2}";
-            lblTotalVal.Text = $"${finalTotal:N2}";
+            lblSubTotalVal.Text = string.Format("${0:N2}", subTotal);
+            lblDiscountVal.Text = string.Format("${0:N2}", totalDiscount);
+            lblTotalVal.Text = string.Format("${0:N2}", finalTotal);
 
             _selectedCartItem = null;
             btnUpdateQty.Enabled = false;
@@ -102,7 +102,7 @@ namespace SmartMedPharmacy.Forms
             // Check if stock permits
             if (newQty > _selectedCartItem.Medicine.Stock)
             {
-                MessageBox.Show($"Only {_selectedCartItem.Medicine.Stock} items are available in inventory.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(string.Format("Only {0} items are available in inventory.", _selectedCartItem.Medicine.Stock), "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -115,7 +115,7 @@ namespace SmartMedPharmacy.Forms
         {
             if (_selectedCartItem == null) return;
 
-            var confirmResult = MessageBox.Show($"Remove {_selectedCartItem.Medicine.MedicineName} from cart?", "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var confirmResult = MessageBox.Show(string.Format("Remove {0} from cart?", _selectedCartItem.Medicine.MedicineName), "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirmResult == DialogResult.Yes)
             {
                 Cart.Remove(_selectedCartItem);
@@ -137,12 +137,13 @@ namespace SmartMedPharmacy.Forms
             // Calculate final total amount
             decimal totalAmount = Cart.Sum(item => item.Medicine.FinalPrice * item.Quantity);
 
-            var confirmCheckout = MessageBox.Show($"Are you sure you want to place this order for ${totalAmount:N2}?", "Confirm Checkout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var confirmCheckout = MessageBox.Show(string.Format("Are you sure you want to place this order for ${0:N2}?", totalAmount), "Confirm Checkout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirmCheckout == DialogResult.Yes)
             {
                 try
                 {
-                    bool success = OrderService.PlaceOrder(currentCust.Id, Cart, totalAmount, out string errMsg);
+                    string errMsg;
+                    bool success = OrderService.PlaceOrder(currentCust.Id, Cart, totalAmount, out errMsg);
                     if (success)
                     {
                         MessageBox.Show("Order placed successfully! You can track your order status in the dashboard.", "Order Placed", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -151,12 +152,12 @@ namespace SmartMedPharmacy.Forms
                     }
                     else
                     {
-                        MessageBox.Show($"Order checkout failed:\n\n{errMsg}", "Checkout Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(string.Format("Order checkout failed:\n\n{0}", errMsg), "Checkout Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error occurred during checkout:\n\n{ex.Message}", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("An error occurred during checkout:\n\n{0}", ex.Message), "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

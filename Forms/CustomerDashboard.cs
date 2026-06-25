@@ -19,8 +19,8 @@ namespace SmartMedPharmacy.Forms
             _customer = AuthenticationService.CurrentUser as Customer;
             if (_customer != null)
             {
-                lblWelcome.Text = $"Welcome, {_customer.FullName}";
-                lblEmail.Text = $"Email: {_customer.Email}";
+                lblWelcome.Text = string.Format("Welcome, {0}", _customer.FullName);
+                lblEmail.Text = string.Format("Email: {0}", _customer.Email);
             }
             else
             {

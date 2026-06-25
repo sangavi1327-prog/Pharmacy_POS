@@ -8,3 +8,12 @@ C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.exe
 C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.pdb
 C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.Forms.LoginForm.resources
 C:\Users\HP\Desktop\ase\obj\Debug\SmartMedPharmacy.csproj.GenerateResource.cache
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\obj\Debug\SmartMedPharmacy.csprojResolveAssemblyReference.cache
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\obj\Debug\SmartMedPharmacy.Forms.LoginForm.resources
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\obj\Debug\SmartMedPharmacy.csproj.GenerateResource.Cache
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\obj\Debug\SmartMedPharmacy.exe
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\obj\Debug\SmartMedPharmacy.pdb
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\bin\Debug\Database\DbSchema.sql
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\bin\Debug\SmartMedPharmacy.exe.config
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\bin\Debug\SmartMedPharmacy.exe
+C:\Users\PIRAN\Videos\Pirana\projects\Pharmacy_POS\bin\Debug\SmartMedPharmacy.pdb

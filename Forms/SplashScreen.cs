@@ -38,7 +38,7 @@ namespace SmartMedPharmacy.Forms
             catch (Exception ex)
             {
                 lblStatus.Text = "Database initialization failed.";
-                MessageBox.Show($"Startup Error: {ex.Message}\n\nPlease check SQL Server LocalDB connection and restart.", "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Startup Error: {0}\n\nPlease check SQL Server LocalDB connection and restart.", ex.Message), "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }

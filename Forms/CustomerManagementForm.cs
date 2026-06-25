@@ -32,7 +32,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load customers: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load customers: {0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -115,7 +115,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -157,7 +157,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Search failed: {ex.Message}", "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Search failed: {0}", ex.Message), "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

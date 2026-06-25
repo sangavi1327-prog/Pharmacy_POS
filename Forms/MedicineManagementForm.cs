@@ -49,7 +49,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load medicines: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load medicines: {0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -92,7 +92,8 @@ namespace SmartMedPharmacy.Forms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!ValidateInputs(out Medicine med)) return;
+            Medicine med;
+            if (!ValidateInputs(out med)) return;
 
             try
             {
@@ -108,14 +109,15 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (_selectedMedicineId == -1) return;
-            if (!ValidateInputs(out Medicine med)) return;
+            Medicine med;
+            if (!ValidateInputs(out med)) return;
 
             med.MedicineID = _selectedMedicineId;
 
@@ -133,7 +135,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -158,7 +160,7 @@ namespace SmartMedPharmacy.Forms
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("Error: {0}", ex.Message), "Exception Raised", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -204,7 +206,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Search failed: {ex.Message}", "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Search failed: {0}", ex.Message), "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -233,7 +235,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Filtering failed: {ex.Message}", "Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Filtering failed: {0}", ex.Message), "Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -246,7 +248,7 @@ namespace SmartMedPharmacy.Forms
         {
             med = null;
             string name = txtMedicineName.Text.Trim();
-            string category = cmbCategory.SelectedItem?.ToString();
+            string category = cmbCategory.SelectedItem == null ? null : cmbCategory.SelectedItem.ToString();
             string dosage = txtDosage.Text.Trim();
             string supplier = txtSupplier.Text.Trim();
             DateTime expiry = dtpExpiryDate.Value;
@@ -257,19 +259,22 @@ namespace SmartMedPharmacy.Forms
                 return false;
             }
 
-            if (!Validator.IsValidPrice(txtPrice.Text, out decimal price) || price <= 0)
+            decimal price;
+            if (!Validator.IsValidPrice(txtPrice.Text, out price) || price <= 0)
             {
                 MessageBox.Show("Please enter a valid positive decimal price.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            if (!Validator.IsValidStock(txtStock.Text, out int stock))
+            int stock;
+            if (!Validator.IsValidStock(txtStock.Text, out stock))
             {
                 MessageBox.Show("Please enter a valid non-negative integer stock value.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            if (!decimal.TryParse(txtDiscount.Text, out decimal discount) || discount < 0 || discount > 100)
+            decimal discount;
+            if (!decimal.TryParse(txtDiscount.Text, out discount) || discount < 0 || discount > 100)
             {
                 MessageBox.Show("Please enter a valid discount percentage (0 to 100).", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;

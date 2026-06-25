@@ -34,7 +34,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load orders: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load orders: {0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -70,11 +70,11 @@ namespace SmartMedPharmacy.Forms
             {
                 DataTable dtItems = OrderService.GetOrderDetails(orderId);
                 dgvOrderItems.DataSource = dtItems;
-                lblTotalVal.Text = $"${totalAmount:N2}";
+                lblTotalVal.Text = string.Format("${0:N2}", totalAmount);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load order details: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load order details: {0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -97,7 +97,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error updating order: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Error updating order: {0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

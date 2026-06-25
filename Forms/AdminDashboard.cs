@@ -37,7 +37,7 @@ namespace SmartMedPharmacy.Forms
                 if (stats.Rows.Count > 0)
                 {
                     DataRow row = stats.Rows[0];
-                    lblSalesVal.Text = $"${Convert.ToDecimal(row["TotalSales"]):N2}";
+                    lblSalesVal.Text = string.Format("${0:N2}", Convert.ToDecimal(row["TotalSales"]));
                     lblOrdersVal.Text = row["TotalOrders"].ToString();
                     lblCustomersVal.Text = row["TotalCustomers"].ToString();
                     lblMedicinesVal.Text = row["TotalMedicines"].ToString();
@@ -56,7 +56,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load dashboard stats:\n\n{ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load dashboard stats:\n\n{0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -91,7 +91,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Chart load issue: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine(string.Format("Chart load issue: {0}", ex.Message));
             }
         }
 

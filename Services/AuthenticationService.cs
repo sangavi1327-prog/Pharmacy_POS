@@ -9,7 +9,10 @@ namespace SmartMedPharmacy.Services
     public class AuthenticationService
     {
         private static User _currentUser;
-        public static User CurrentUser => _currentUser;
+        public static User CurrentUser
+        {
+            get { return _currentUser; }
+        }
 
         public static bool RegisterCustomer(string fullName, string email, string phone, string address, string username, string password)
         {
@@ -123,7 +126,8 @@ namespace SmartMedPharmacy.Services
             };
 
             int affected = DatabaseHelper.ExecuteNonQuery(updateQuery, updateParams);
-            if (affected > 0 && _currentUser is Customer cust && cust.Id == customerId)
+            Customer cust = _currentUser as Customer;
+            if (affected > 0 && cust != null && cust.Id == customerId)
             {
                 cust.FullName = fullName;
                 cust.Email = email;

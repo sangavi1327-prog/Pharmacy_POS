@@ -31,14 +31,14 @@ namespace SmartMedPharmacy.Services
                         object stockObj = checkCmd.ExecuteScalar();
                         if (stockObj == null)
                         {
-                            errorMessage = $"Medicine '{item.Medicine.MedicineName}' no longer exists.";
+                            errorMessage = string.Format("Medicine '{0}' no longer exists.", item.Medicine.MedicineName);
                             transaction.Rollback();
                             return false;
                         }
                         int currentStock = (int)stockObj;
                         if (currentStock < item.Quantity)
                         {
-                            errorMessage = $"Insufficient stock for '{item.Medicine.MedicineName}'. Current stock is {currentStock}.";
+                            errorMessage = string.Format("Insufficient stock for '{0}'. Current stock is {1}.", item.Medicine.MedicineName, currentStock);
                             transaction.Rollback();
                             return false;
                         }
@@ -96,13 +96,19 @@ namespace SmartMedPharmacy.Services
             }
             catch (Exception ex)
             {
-                transaction?.Rollback();
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
                 errorMessage = ex.Message;
                 return false;
             }
             finally
             {
-                conn?.Close();
+                if (conn != null)
+                {
+                    conn.Close();
+                }
             }
         }
 
@@ -171,6 +177,9 @@ namespace SmartMedPharmacy.Services
     {
         public Medicine Medicine { get; set; }
         public int Quantity { get; set; }
-        public decimal SubTotal => Medicine.FinalPrice * Quantity;
+        public decimal SubTotal
+        {
+            get { return Medicine.FinalPrice * Quantity; }
+        }
     }
 }

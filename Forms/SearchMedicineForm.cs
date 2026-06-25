@@ -62,7 +62,7 @@ namespace SmartMedPharmacy.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load medicines: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load medicines: {0}", ex.Message), "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -100,13 +100,15 @@ namespace SmartMedPharmacy.Forms
 
             if (!string.IsNullOrEmpty(txtMinPrice.Text))
             {
-                if (decimal.TryParse(txtMinPrice.Text, out decimal min)) minPrice = min;
+                decimal min;
+                if (decimal.TryParse(txtMinPrice.Text, out min)) minPrice = min;
                 else MessageBox.Show("Min Price must be a number.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             if (!string.IsNullOrEmpty(txtMaxPrice.Text))
             {
-                if (decimal.TryParse(txtMaxPrice.Text, out decimal max)) maxPrice = max;
+                decimal max;
+                if (decimal.TryParse(txtMaxPrice.Text, out max)) maxPrice = max;
                 else MessageBox.Show("Max Price must be a number.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
@@ -128,7 +130,7 @@ namespace SmartMedPharmacy.Forms
 
         private void ApplySorting()
         {
-            string sortOption = cmbSort.SelectedItem?.ToString() ?? "None";
+            string sortOption = cmbSort.SelectedItem == null ? "None" : cmbSort.SelectedItem.ToString();
             if (sortOption == "Name (A-Z)")
             {
                 _filteredMedicines = _filteredMedicines.OrderBy(m => m.MedicineName).ToList();
@@ -157,7 +159,7 @@ namespace SmartMedPharmacy.Forms
                 _selectedMedicine = _allMedicines.FirstOrDefault(m => m.MedicineID == medId);
                 if (_selectedMedicine != null)
                 {
-                    lblSelectedMed.Text = $"{_selectedMedicine.MedicineName} - ${_selectedMedicine.FinalPrice:N2}";
+                    lblSelectedMed.Text = string.Format("{0} - ${1:N2}", _selectedMedicine.MedicineName, _selectedMedicine.FinalPrice);
                     numQuantity.Maximum = _selectedMedicine.Stock;
                     numQuantity.Value = _selectedMedicine.Stock > 0 ? 1 : 0;
                     btnAddToCart.Enabled = _selectedMedicine.Stock > 0;
@@ -178,7 +180,7 @@ namespace SmartMedPharmacy.Forms
 
             if (qty > _selectedMedicine.Stock)
             {
-                MessageBox.Show($"Cannot add {qty} items. Only {_selectedMedicine.Stock} items are available in stock.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(string.Format("Cannot add {0} items. Only {1} items are available in stock.", qty, _selectedMedicine.Stock), "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -189,7 +191,7 @@ namespace SmartMedPharmacy.Forms
                 int totalQty = existing.Quantity + qty;
                 if (totalQty > _selectedMedicine.Stock)
                 {
-                    MessageBox.Show($"Your cart already has {existing.Quantity} items. Adding {qty} more would exceed stock limit of {_selectedMedicine.Stock}.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(string.Format("Your cart already has {0} items. Adding {1} more would exceed stock limit of {2}.", existing.Quantity, qty, _selectedMedicine.Stock), "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 existing.Quantity = totalQty;
@@ -203,7 +205,7 @@ namespace SmartMedPharmacy.Forms
                 });
             }
 
-            MessageBox.Show($"{_selectedMedicine.MedicineName} (x{qty}) added to cart!", "Cart Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(string.Format("{0} (x{1}) added to cart!", _selectedMedicine.MedicineName, qty), "Cart Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
             FetchAllMedicines(); // Refresh stock totals visually
         }
     }
