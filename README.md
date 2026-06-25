@@ -50,6 +50,7 @@ The database connection strings are stored in `App.config`.
 - Cart and order placement
 - Stock reduction during checkout
 - Order status updates
+### below still under development
 - Prescription file path recording
 - Dashboard statistics
 - Sales, stock, and customer reports

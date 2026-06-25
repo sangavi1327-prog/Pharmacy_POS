@@ -18,7 +18,7 @@ BEGIN
         Phone NVARCHAR(20) NULL,
         Address NVARCHAR(200) NULL,
         Username NVARCHAR(50) NOT NULL,
-        Password NVARCHAR(50) NOT NULL
+        Password NVARCHAR(50) NOT NULL -- need to add MD5 encription : sankavi 
     );
 END;
 
